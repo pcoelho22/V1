@@ -1,10 +1,9 @@
 <?php 
-// J'inclus mon fichier de fonction
-require 'inc/function.php';
 // J'inclue le nav
 require 'inc/nav.php';
 // Je me connect DB
 require 'inc/db.php';
+require 'inc/list.php';
 
 // je recupere mov_id choissi
 if (!empty($_GET['mov_id'])) {
@@ -29,10 +28,10 @@ if (!empty($_GET['mov_id'])) {
 		// Je vérifie que la requête contient des résultats
 		else if ($pdoStatement->rowCount() > 0) {
 			// Je récupère le résultat dans un tableau
-			$myStudent = $pdoStatement->fetch();
+			$movieInfo = $pdoStatement->fetch();
 		}
 }else{
-	echo 'Aucune film !'
+	echo 'Aucun film !'
 }
 
 
