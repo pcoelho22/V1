@@ -12,7 +12,33 @@
 </form>
 
 
+<h3>Liste des films</h3>
 
+<?php if (isset($moviesListe) && sizeof($moviesListe) > 0) : ?>
+	<table>
+		<thead>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ($moviesListe as $currentFilm) : ?>
+				<tr>
+					<td><a href='student.php?stu_id=<?= $currentFilm['mov_id']?>'><?= $currentFilm['mov_name'] ?> </a></td>
+					<td><?= $currentFilm[''] ?></td>
+					<td><?= $currentFilm[''] ?></td>
+					<td><?= $currentFilm[''] ?></td>
+					<td><?= $currentFilm[''] ?></td>
+					<td><?= $currentFilm[''] ?></td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
 <button class = "button1" ><a href="list.php?ses_id=<?= $sessionID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage+1) ?>">suivant</a></button>
 
 	<?php
