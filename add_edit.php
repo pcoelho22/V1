@@ -102,7 +102,7 @@ if (!empty($_POST)) {
 								// Je déplace le fichier uploadé au bon endroit
 								if (move_uploaded_file($fichier['tmp_name'], 'upload/'.$_GET['mov_id'].'.'.$extension)) {
 									echo 'fichier téléversé<br />';
-									$photo = $_GET['mov_id'].'.'.$extension;
+									$photo = 'upload/'.$_GET['mov_id'].'.'.$extension;
 
 									$uptImage = "UPDATE movie SET mov_image = :image, mov_date_update = NOW() WHERE mov_id = :mov_id";
 									$pdoStatement = $pdo->prepare($uptImage);
