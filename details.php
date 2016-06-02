@@ -30,5 +30,3 @@ if (!empty($_GET['mov_id'])) {
 			$movieInfo = $pdoStatement->fetch();
 		}
 }
-?>
-
