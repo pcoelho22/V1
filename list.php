@@ -45,5 +45,5 @@ if (!empty($_GET['cat_id'])) {
 //J'affiche ma page
 	require 'inc/nav.php';
 	require 'inc/view_list.php';
-	require 'inc/details.php';
+	require 'details.php';
 ?>
