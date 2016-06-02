@@ -31,7 +31,7 @@ if (array_key_exists('offset', $_GET) && $_GET['offset'] > 0) {
 	$currentOffset = intval($_GET['offset']);
 }
 
-$etudiantListe = array();
+$currentFilm = array();
 
 /*$sql = "SELECT stu_id, stu_email, stu_birthdate AS birthdate, stu_name, stu_firstname, cou_name, cit_name, mar_name, ses_id
 	FROM student
@@ -56,7 +56,7 @@ else{
 	$etudiantListe = $pdoStatement->fetchAll();
 	//print_r($etudiantListe);
 }*/
-$etudiantListe = getStudentListSearch($search, $search2);
+$currentFilm = gtFilmListSearch(e$search, $search2);
 
 /*$sql2 = "SELECT COUNT(*) AS count
 	FROM student

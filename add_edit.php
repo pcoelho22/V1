@@ -16,17 +16,33 @@ if (isset($_GET['mov_id'])) {
 	}
 }
 
+if (isset($_GET["search"])) {
+	$champ = $_GET["search"];
+	$search = file_get_contents("http://www.omdbapi.com/?t=$champ");
+	$infoFilmImbd = json_decode($search, true);
+	var_dump($infoFilmImbd);
+}
+
 if (!empty($_POST)) {
 	//print_r($_POST); 
 	$extensionAutorisees = array('jpg', 'jpeg', 'png', 'gif', 'tif', 'svg');
 
-	$title = trim($_POST['title']);
+	/*$title = trim($_POST['title']);
 	$path = trim($_POST['path']);
-	$imageApi = trim($_POST['imageApi']);
 	$cast = trim($_POST['cast']);
 	//$categoty = trim($_POST['categoty']);
 	$synopsis = trim($_POST['synopsis']);
-	$og_title = trim($_POST['og_title']);
+	$og_title = trim($_POST['og_title']);*/
+
+	$cat_id = isset($_POST['cat_id']) ? intval(trim($_POST['cat_id'])) : 0;
+	$sto_id = isset($_POST['sto_id']) ? intval(trim($_POST['sto_id'])) : 0;
+	$mov_title = isset($_POST['title']) ? trim($_POST['title']) : '';
+	$mov_original_title = isset($_POST['og_title']) ? trim($_POST['og_title']) : '';
+	$mov_year = isset($_POST['mov_year']) ? trim($_POST['mov_year']) : 0;
+	$mov_synopsis = isset($_POST['synopsis']) ? trim($_POST['synopsis']) : '';
+	$mov_path = isset($_POST['path']) ? trim($_POST['path']) : '';
+	$mov_cast = isset($_POST['cast']) ? trim($_POST['cast']) : '';
+	$imageApi = isset($_POST['imageApi']) ? trim($_POST['imageApi']) : '';
 
 
 	$titleValide = false;
@@ -36,6 +52,8 @@ if (!empty($_POST)) {
 	$categotyValide = false;
 	$synopsisValide = false;
 	$og_titleValide = false;
+	$movYearValide = false;
+	$storageValide = false;
 
 	if (empty($title) || strlen($title) > 128) {
 		echo 'le titre est vide ou trop long<br/>';
@@ -85,6 +103,21 @@ if (!empty($_POST)) {
 	else {
 		$og_titleValide = true;
 	}
+
+	if (empty($mov_year)) {
+		echo "l'année est vide<br/>";
+	}
+	else{
+		$movYearValide = true;
+	}
+
+	if (empty($sto_id)) {
+		echo "le storage est vide<br/>";
+	}
+	else{
+		$storageValide = true;
+	}
+
 	if (isset($_GET['mov_id'])) {
 		if ($titleValide || $og_titleValide || $pathValide || $castValide || $categotyValide || $synopsisValide || (isset($_FILES) || $imageApiValide)) {
 			if (isset($_FILES)) {
@@ -238,17 +271,35 @@ if (!empty($_POST)) {
 							//if (substr($fichier['name'], -4) != '.php') {
 							if (in_array($extension, $extensionAutorisees)) {
 								// Je déplace le fichier uploadé au bon endroit
-								if (move_uploaded_file($fichier['tmp_name'], 'upload/'.md5($email).'.'.$extension)) {
+								if (move_uploaded_file($fichier['tmp_name'], 'upload/'.$mov_title.'.'.$extension)) {
 									echo 'fichier téléversé<br />';
-									$photo = md5($email).'.'.$extension;
+									$photo = 'upload/'.$mov_title.'.'.$extension;
 
-									//fontion pour insert
-									if ($insertOk == true) {
-										echo "L'étudiant a bien été ajouté";
+									// J'écris ma requête dans une variable
+									$insertInto = "INSERT INTO movie( cat_id, sto_id, mov_title, mov_year, mov_cast, mov_synopsis, mov_path, mov_original_title, mov_image, mov_date_creation, mov_date_updated ) VALUES( :cat_id, :sto_id, :titre, :annee, :acteurs, :synopsis, :filename, :ogTitre, :affiche, NOW(), NOW())";
+
+									// Je prépare ma requête
+									$pdoStatement = $pdo->prepare($insertInto);
+									// Je bind toutes les variables de requête
+									$pdoStatement->bindValue(':titre', $mov_title);
+									$pdoStatement->bindValue(':ogTitre', $mov_original_title);
+									$pdoStatement->bindValue(':annee', $mov_year);
+									$pdoStatement->bindValue(':synopsis', $mov_synopsis);
+									$pdoStatement->bindValue(':description', $mov_path);
+									$pdoStatement->bindValue(':acteurs', $mov_cast);
+									$pdoStatement->bindValue(':affiche', $mov_image);
+									$pdoStatement->bindValue(':cat_id', $cat_id);
+									$pdoStatement->bindValue(':sup_id', $sto_id);
+
+									// J'exécute la requête, et ça me renvoi true ou false
+									if ($pdoStatement->execute()) {
+										$newId = $pdo->lastInsertId();
+										// Je redirige sur la même page, à laquelle j'ajoute l'id du film créé => modification
+										// Pas de formulaire soumis sur la page de redirection => pas de POST
+										header('Location: details.php?mov_id='.$newId);
+
 									}
-									else{
-										echo "Pas executé";
-									}
+									
 								}
 								else {
 									echo 'une erreur est survenue<br />';
