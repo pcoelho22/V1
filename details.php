@@ -3,6 +3,7 @@
 require 'inc/nav.php';
 // Je me connect DB
 require 'inc/db.php';
+require 'list.php';
 
 // je recupere mov_id choissi
 if (!empty($_GET['mov_id'])) {
