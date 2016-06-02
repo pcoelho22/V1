@@ -1,5 +1,5 @@
 <form method="get">
-	<input type="hidden" name="ses_id" value="<?=$sessionID?>">
+	<input type="hidden" name="ses_id" value="<?=$catID?>">
 	<select name="nbPerPage">
 		<option value="1">1 par page</option>
 		<option value="2">2 par page</option>
@@ -30,19 +30,17 @@
 		<tbody>
 			<?php foreach ($moviesListe as $currentFilm) : ?>
 				<tr>
-					<td><a href='student.php?stu_id=<?= $currentFilm['mov_id']?>'><?= $currentFilm['mov_name'] ?> </a></td>
-					<td><?= $currentFilm[''] ?></td>
-					<td><?= $currentFilm[''] ?></td>
-					<td><?= $currentFilm[''] ?></td>
-					<td><?= $currentFilm[''] ?></td>
-					<td><?= $currentFilm[''] ?></td>
+					<td><a href='list.php?stu_id=<?= $currentFilm['mov_id']?>'><?= $currentFilm['mov_title'] ?> </a></td>
+					<td><?= $currentFilm['mov_date_creation'] ?></td>
+					<td><?= $currentFilm['mov_image'] ?></td>
+					<td><?= $currentFilm['cat_name'] ?></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
-<button class = "button1" ><a href="list.php?ses_id=<?= $sessionID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage+1) ?>">suivant</a></button>
+<button class = "button1" ><a href="list.php?ses_id=<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage+1) ?>">suivant</a></button>
 
 	<?php
 
 	if($currentPage!==0){?>
-		<button class = "button2" ><a href="list.php?ses_id=<?= $sessionID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage-1) ?>">précédent</a></button>
+		<button class = "button2" ><a href="list.php?ses_id=<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage-1) ?>">précédent</a></button>
 	<?php }?>
