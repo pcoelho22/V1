@@ -2,13 +2,13 @@
 //Je crée PDO
 require 'inc/db.php';
 
-// Je recupère les ses_id via GET
+// Je recupère les cat_id via GET
 
 if (!empty($_GET['cat_id'])) {
 	$catID = intval($_GET['cat_id']); // Type ? int
 	//echo $sessionID;exit;
 
-	// Nombre d'étudiants par page
+	// Nombre de films par page
 	$currentOffset = 0;
 	$currentPage=1;
 	$nbPerPage=4;
