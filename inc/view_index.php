@@ -9,12 +9,10 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 		<input type="text" name="search" value="" placeholder="Search..." />
 		<input type="submit" value="rechercherHome" />
 </form>
-
+<!-- il faut faire un foreach-->
 <ul>
-	<li><a href=""></a>name cat</li>
-	<li><a href=""></a>name cat</li>
-	<li><a href=""></a>name cat</li>
-	<li><a href=""></a>name cat</li>
+	<li><a href=""><?= $catList['Category'] ?></a>name cat<?= $catList['nbMovies'] ?></li>
+	
 </ul>
 
 <ul>
