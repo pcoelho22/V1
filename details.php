@@ -13,8 +13,8 @@ if (!empty($_GET['mov_id'])) {
 	$sql = '
 		SELECT mov_id, mov_title, mov_cast, mov_synopsis, mov_path, mov_image, mov_year, sto_name, cat_name
 		FROM movie
-		LEFT OUTER JOIN category ON category.cat_id = movie.cat_id
-		LEFT OUTER JOIN storage ON storage.sto_id = movie.sto_id
+		JOIN category ON category.cat_id = movie.cat_id
+		JOIN storage ON storage.sto_id = movie.sto_id
 		WHERE mov_id = :movieX
 	';
 
@@ -30,9 +30,5 @@ if (!empty($_GET['mov_id'])) {
 			// Je récupère le résultat dans un tableau
 			$movieInfo = $pdoStatement->fetch();
 		}
-}else{
-	echo 'Aucun film !'
 }
-
-
-
+?>
