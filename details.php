@@ -4,8 +4,11 @@ require 'inc/nav.php';
 // Je me connect DB
 require 'inc/db.php';
 
+require 'list.php';
+
+
 // je recupere mov_id choissi
-if (!empty($_GET['mov_id'])) {
+if (isset($_GET['mov_id'])) {
 	$movieID = intval($_GET['mov_id']);
 	// pour debug
 	//print_r($_GET);
@@ -30,3 +33,4 @@ if (!empty($_GET['mov_id'])) {
 			$movieInfo = $pdoStatement->fetch();
 		}
 }
+require 'inc/view_details.php';
