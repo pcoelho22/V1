@@ -18,13 +18,10 @@
 	<table>
 		<thead>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td>Image</td>
+				<td>Title</td>
+				<td>Year</td>
+				<td>Genres</td>
 			</tr>
 		</thead>
 		<tbody>
