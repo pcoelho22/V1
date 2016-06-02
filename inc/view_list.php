@@ -1,5 +1,5 @@
 <form method="get">
-	<input type="hidden" name="ses_id" value="<?=$catID?>">
+	<input type="hidden" name="cat_id" value="<?=$catID?>">
 	<select name="nbPerPage">
 		<option value="1">1 par page</option>
 		<option value="2">2 par page</option>
@@ -27,7 +27,7 @@
 		<tbody>
 			<?php foreach ($moviesListe as $currentFilm) : ?>
 				<tr>
-					<td><a href='list.php?stu_id=<?= $currentFilm['mov_id']?>'><?= $currentFilm['mov_title'] ?> </a></td>
+					<td><a href='list.php?cat_id=<?= $currentFilm['mov_id']?>'><?= $currentFilm['mov_title'] ?> </a></td>
 					<td><?= $currentFilm['mov_date_creation'] ?></td>
 					<td><?= $currentFilm['mov_image'] ?></td>
 					<td><?= $currentFilm['cat_name'] ?></td>
