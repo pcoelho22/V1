@@ -8,7 +8,7 @@ if (!empty($_GET['mov_id'])) {
 	// pour debug
 	//print_r($_GET);
 	$sql = '
-		DELETE * 
+		DELETE  
 		FROM movie
 		WHERE mov_id = :movieX
 	';

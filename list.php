@@ -21,7 +21,7 @@ if (!empty($_GET['cat_id'])) {
 	}
 
 	$sql = '
-		SELECT mov_image, mov_title, mov_date_creation, category.cat_name
+		SELECT mov_id, mov_image, mov_title, mov_date_creation, category.cat_name
 		FROM movie
 		JOIN category ON category.cat_id = movie.cat_id
 		WHERE category.cat_id = :catID
@@ -42,7 +42,7 @@ if (!empty($_GET['cat_id'])) {
 	}
 }
 //J'affiche ma page
-	require 'inc/nav.php';
+	require_once 'inc/nav.php';
 	require 'inc/view_list.php';
 	//require 'details.php';
 ?>

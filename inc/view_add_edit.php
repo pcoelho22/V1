@@ -41,7 +41,7 @@
 				<input type="text" name="imageApi" placeholder="Lien de l'image api"><br/>
 				<input type="file" name="image"><br/><br/>
 				<input type="submit" name="valider" value="valider">
-				<button><a href="delete.php?mov_id=">supprimer</a></button>
+				<button><a href="confirmation.php?mov_id=<?= $_GET['mov_id'] ?>">supprimer</a></button>
 			</fieldset>
 	</form>
 <?php endif; ?>

@@ -27,7 +27,7 @@
 		<tbody>
 			<?php foreach ($moviesListe as $currentFilm) : ?>
 				<tr>
-					<td><a href="details.php?cat_id="><?= $currentFilm['mov_title'] ?> </a></td>
+					<td><a href="details.php?mov_id=<?= $currentFilm['mov_id'] ?>"><?= $currentFilm['mov_title'] ?> </a></td>
 					<td><?= $currentFilm['mov_date_creation'] ?></td>
 					<td><?= $currentFilm['mov_image'] ?></td>
 					<td><?= $currentFilm['cat_name'] ?></td>
@@ -35,13 +35,13 @@
 			<?php endforeach; ?>
 		</tbody>
 
-<button class = "button1" ><a href="list.php?cat_id="<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage+1) ?>">suivant</a></button>
+	<button class = "button1" ><a href="list.php?cat_id="<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage+1) ?>">suivant</a></button>
 
 	<?php
 
-	if($currentPage!==0){?>
-		<button class = "button2" ><a href="list.php?cat_id=<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage-1) ?>">précédent</a></button>
-	<?php }?>
+	if($currentPage!==0): ?>
+		<button class = "button2" ><a href="list.php?cat_id="<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage-1) ?>">précédent</a></button>
 	<?php else :?>
-	aucun film
+	<p>aucun film</p>
+	<?php endif; ?>
 <?php endif; ?>
