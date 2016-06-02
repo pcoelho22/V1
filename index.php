@@ -1,5 +1,5 @@
 <?php
-require 'inc/db.php'
+require 'inc/db.php';
 require 'inc/nav.php';
 require 'inc/search.php';
 
