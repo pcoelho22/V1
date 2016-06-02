@@ -2,6 +2,7 @@
 require ('inc/db.php');
 require ('inc/function.php');
 
+
 if (!empty($_GET['mov_id'])) {
 	$movieID = intval($_GET['mov_id']);
 	// pour debug
