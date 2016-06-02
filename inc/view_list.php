@@ -27,7 +27,7 @@
 		<tbody>
 			<?php foreach ($moviesListe as $currentFilm) : ?>
 				<tr>
-					<td><a href='list.php?cat_id=<?= $currentFilm['mov_id']?>'><?= $currentFilm['mov_title'] ?> </a></td>
+					<td><a href="details.php?cat_id="><?= $currentFilm['mov_title'] ?> </a></td>
 					<td><?= $currentFilm['mov_date_creation'] ?></td>
 					<td><?= $currentFilm['mov_image'] ?></td>
 					<td><?= $currentFilm['cat_name'] ?></td>
@@ -35,7 +35,7 @@
 			<?php endforeach; ?>
 		</tbody>
 
-<button class = "button1" ><a href="list.php?cat_id=<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage+1) ?>">suivant</a></button>
+<button class = "button1" ><a href="list.php?cat_id="<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage+1) ?>">suivant</a></button>
 
 	<?php
 

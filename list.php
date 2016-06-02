@@ -24,7 +24,7 @@ if (!empty($_GET['cat_id'])) {
 		SELECT mov_image, mov_title, mov_date_creation, category.cat_name
 		FROM movie
 		JOIN category ON category.cat_id = movie.cat_id
-		WHERE cat_id = :catID
+		WHERE category.cat_id = :catID
 		LIMIT :offset,:nbPerPage
 	';
 	$pdoStatement = $pdo->prepare($sql);
