@@ -1,7 +1,8 @@
 <div id="leftSide">
 
 	<!--si la image est dans la DB <img src="" name="imageMovie">-->
-	<p><?= $movieInfo['mov_image'] ?></p>
+	<img src="<?= $movieInfo['mov_image'] ?>"></img>
+
 	<!--Year Movie -->
 	<h3><?= $movieInfo['mov_year'] ?></h3>
 	<!--Storage Movie-->
@@ -10,7 +11,7 @@
 
 <div id="rightSide">
 	<!--lien vers fichier, manque le chemin-->
-	<h2><a href=""><?= $movieInfo['mov_title'] ?></h2>
+	<h2><a href=""><?= $movieInfo['mov_title'] ?></a></h2>
 	<!--Name Movie -->
 	<h3><?= $movieInfo['cat_name'] ?></h3>
 	<!--Category Movie -->
