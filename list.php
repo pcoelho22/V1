@@ -6,8 +6,7 @@ require 'inc/db.php';
 
 if (!empty($_GET['cat_id'])) {
 	$catID = intval($_GET['cat_id']); // Type ? int
-	//echo $sessionID;exit;
-
+	
 	// Nombre de films par page
 	$currentOffset = 0;
 	$currentPage=1;
