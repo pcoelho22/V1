@@ -34,7 +34,7 @@
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
-				
+
 <button class = "button1" ><a href="list.php?cat_id=<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage+1) ?>">suivant</a></button>
 
 	<?php
@@ -42,3 +42,6 @@
 	if($currentPage!==0){?>
 		<button class = "button2" ><a href="list.php?cat_id=<?= $catID ?>&nbPerPage=<?=$nbPerPage ?>&page=<?= ($currentPage-1) ?>">précédent</a></button>
 	<?php }?>
+	<?php else :?>
+	aucun film
+<?php endif; ?>
