@@ -4,6 +4,9 @@ require 'inc/nav.php';
 // Je me connect DB
 require 'inc/db.php';
 
+require 'list.php';
+
+
 // je recupere mov_id choissi
 if (isset($_GET['mov_id'])) {
 	$movieID = intval($_GET['mov_id']);
