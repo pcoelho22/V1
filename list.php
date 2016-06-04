@@ -21,7 +21,7 @@ if (!empty($_GET['cat_id'])) {
 	}
 
 	$sql = '
-		SELECT mov_id, mov_image, mov_title, mov_date_creation, category.cat_name
+		SELECT mov_id, mov_image, mov_title, mov_year, category.cat_name
 		FROM movie
 		JOIN category ON category.cat_id = movie.cat_id
 		WHERE category.cat_id = :catID

@@ -32,7 +32,7 @@ function getMovieListSearch($search, $search2){
 	$sql = "SELECT mov_id, mov_title
 		LEFT OUTER JOIN category ON category.cat_id = movie.cat_id
 		LEFT OUTER JOIN storage ON storage.sto_id = movie.sto_id
-		WHERE mov_id = :id_movie"; 
+		WHERE mov_id = :id_movie
 		OR mov_title LIKE :search OR mov_title LIKE :search2 
 		OR mov_cast :search OR mov_cast :search2 
 		OR mov_original_title LIKE :search OR mov_original_title LIKE :search2 
@@ -251,7 +251,7 @@ function updateStudentId($id_student, $idCategory){
 	$pdoStatement = $pdo->prepare($uptSession);
 	$pdoStatement->bindValue(':idStudent' , $id_student, PDO::PARAM_INT);
 	$pdoStatement->bindValue(':idCategory' , $idCategory, PDO::PARAM_INT);
-	if ($pdoStatement->executeidCategory		//echo 'Session modifié <br/>';
+	if ($pdoStatement->executeidCategory){		//echo 'Session modifié <br/>';
 		return true;
 	}
 	return false;

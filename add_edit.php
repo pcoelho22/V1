@@ -2,6 +2,20 @@
 require ('inc/db.php');
 require ('inc/function.php');
 
+$sql = "SELECT cat_name, cat_id FROM category";
+$pdoStatement = $pdo->prepare($sql);
+// Si erreur
+if ($pdoStatement->execute()) {
+	$cat_list = $pdoStatement->fetchAll();
+}
+
+$sql = "SELECT sto_name, sto_id FROM storage";
+$pdoStatement = $pdo->prepare($sql);
+// Si erreur
+if ($pdoStatement->execute()) {
+	$sto_list = $pdoStatement->fetchAll();
+}
+
 if (isset($_GET['mov_id'])) {
 	$sql = "SELECT * FROM movie WHERE mov_id = :mov_id";
 	
@@ -20,9 +34,8 @@ if (isset($_GET["search"])) {
 	$champ = $_GET["search"];
 	$search = file_get_contents("http://www.omdbapi.com/?t=$champ");
 	$infoFilmImbd = json_decode($search, true);
-	var_dump($infoFilmImbd);
+	//var_dump($infoFilmImbd);
 }
-
 if (!empty($_POST)) {
 	//print_r($_POST); 
 	$extensionAutorisees = array('jpg', 'jpeg', 'png', 'gif', 'tif', 'svg');
@@ -34,15 +47,15 @@ if (!empty($_POST)) {
 	$synopsis = trim($_POST['synopsis']);
 	$og_title = trim($_POST['og_title']);*/
 
-	$cat_id = isset($_POST['cat_id']) ? intval(trim($_POST['cat_id'])) : 0;
-	$sto_id = isset($_POST['sto_id']) ? intval(trim($_POST['sto_id'])) : 0;
-	$mov_title = isset($_POST['title']) ? trim($_POST['title']) : '';
-	$mov_original_title = isset($_POST['og_title']) ? trim($_POST['og_title']) : '';
-	$mov_year = isset($_POST['mov_year']) ? trim($_POST['mov_year']) : 0;
-	$mov_synopsis = isset($_POST['synopsis']) ? trim($_POST['synopsis']) : '';
-	$mov_path = isset($_POST['path']) ? trim($_POST['path']) : '';
-	$mov_cast = isset($_POST['cast']) ? trim($_POST['cast']) : '';
-	$imageApi = isset($_POST['imageApi']) ? trim($_POST['imageApi']) : '';
+	$cat_id = intval(trim($_POST['cat_id'])) ;
+	$sto_id = intval(trim($_POST['sto_id'])) ;
+	$mov_title = trim($_POST['title']);
+	$mov_original_title = trim($_POST['og_title']) ;
+	$mov_year = trim($_POST['year']);
+	$mov_synopsis = trim($_POST['synopsis']);
+	$mov_path = trim($_POST['path']);
+	$mov_cast = trim($_POST['cast']);
+	$imageApi = trim($_POST['imageApi']);
 
 
 	$titleValide = false;
@@ -55,14 +68,14 @@ if (!empty($_POST)) {
 	$movYearValide = false;
 	$storageValide = false;
 
-	if (empty($title) || strlen($title) > 128) {
+	if (empty($mov_title) || strlen($mov_title) > 128) {
 		echo 'le titre est vide ou trop long<br/>';
 	}
 	else {
 		$titleValide = true;
 	}
 
-	if (empty($path) || strlen($path) > 255) {
+	if (empty($mov_path) || strlen($mov_path) > 255) {
 		echo 'le path est vide ou trop long <br/>';
 	}
 	else {
@@ -73,31 +86,31 @@ if (!empty($_POST)) {
 		echo "l'image de l'api est vide<br/>";
 	}
 	else {
-		$imageApi = true;
+		$imageApiValide = true;
 	}
 
-	if (empty($cast)) {
+	if (empty($mov_cast)) {
 		echo 'le cast est vide<br/>';
 	}
 	else {
 		$castValide = true;
 	}
 
-	if (empty($categoty)) {
+	if (empty($cat_id)) {
 		echo 'la categorie est vide<br/>';
 	}
 	else {
 		$categotyValide = true;
 	}
 
-	if (empty($synopsis)) {
+	if (empty($mov_synopsis)) {
 		echo 'la synopsis est vide<br/>';
 	}
 	else {
 		$synopsisValide = true;
 	}
 
-	if (empty($og_title) || strlen($og_title) > 128) {
+	if (empty($mov_original_title) || strlen($mov_original_title) > 128) {
 		echo 'le titre originel est vide<br/>';
 	}
 	else {
@@ -119,7 +132,7 @@ if (!empty($_POST)) {
 	}
 
 	if (isset($_GET['mov_id'])) {
-		if ($titleValide || $og_titleValide || $pathValide || $castValide || $categotyValide || $synopsisValide || (isset($_FILES) || $imageApiValide)) {
+		if ($titleValide || $og_titleValide || $pathValide || $castValide || $categotyValide || $synopsisValide || $movYearValide || (!empty($_FILES) || $imageApiValide)) {
 			if (isset($_FILES)) {
 				foreach ($_FILES as $key => $fichier) {
 					// Je teste si le fichier a été uploadé
@@ -180,7 +193,7 @@ if (!empty($_POST)) {
 				$uptTitle = "UPDATE movie SET mov_title = :title, mov_date_update = NOW() WHERE mov_id = :mov_id";
 				$pdoStatement = $pdo->prepare($uptTitle);
 				$pdoStatement->bindValue(':mov_id' , $_GET['mov_id'], PDO::PARAM_INT);
-				$pdoStatement->bindValue(':title' , $title);
+				$pdoStatement->bindValue(':title' , $mov_title);
 				if ($pdoStatement->execute()){
 					echo "le titre du film a bien été modifier<br/>";
 				}
@@ -193,7 +206,7 @@ if (!empty($_POST)) {
 				$uptTitleOg = "UPDATE movie SET mov_original_title = :title, mov_date_update = NOW() WHERE mov_id = :mov_id";
 				$pdoStatement = $pdo->prepare($uptTitleOg);
 				$pdoStatement->bindValue(':mov_id' , $_GET['mov_id'], PDO::PARAM_INT);
-				$pdoStatement->bindValue(':title' , $og_title);
+				$pdoStatement->bindValue(':title' , $mov_original_title);
 				if ($pdoStatement->execute()){
 					echo "le titre originel du film a bien été modifier<br/>";
 				}
@@ -206,7 +219,7 @@ if (!empty($_POST)) {
 				$uptPath = "UPDATE movie SET mov_path = :chemin, mov_date_update = NOW() WHERE mov_id = :mov_id";
 				$pdoStatement = $pdo->prepare($uptPath);
 				$pdoStatement->bindValue(':mov_id' , $_GET['mov_id'], PDO::PARAM_INT);
-				$pdoStatement->bindValue(':chemin' , $path);
+				$pdoStatement->bindValue(':chemin' , $mov_path);
 				if ($pdoStatement->execute()){
 					echo "le path du film a bien été modifier<br/>";
 				}
@@ -219,7 +232,7 @@ if (!empty($_POST)) {
 				$uptCast = "UPDATE movie SET mov_cast = :cast, mov_date_update = NOW() WHERE mov_id = :mov_id";
 				$pdoStatement = $pdo->prepare($uptCast);
 				$pdoStatement->bindValue(':mov_id' , $_GET['mov_id'], PDO::PARAM_INT);
-				$pdoStatement->bindValue(':cast' , $cast);
+				$pdoStatement->bindValue(':cast' , $mov_cast);
 				if ($pdoStatement->execute()){
 					echo "le cast du film a bien été modifier<br/>";
 				}
@@ -232,7 +245,7 @@ if (!empty($_POST)) {
 				$uptCategory = "UPDATE movie SET cat_id = :category, mov_date_update = NOW() WHERE mov_id = :mov_id";
 				$pdoStatement = $pdo->prepare($uptCategory);
 				$pdoStatement->bindValue(':mov_id' , $_GET['mov_id'], PDO::PARAM_INT);
-				$pdoStatement->bindValue(':category' , $categoty, PDO::PARAM_INT);
+				$pdoStatement->bindValue(':category' , $cat_id, PDO::PARAM_INT);
 				if ($pdoStatement->execute()){
 					echo "la categorie du film a bien été modifier<br/>";
 				}
@@ -245,7 +258,7 @@ if (!empty($_POST)) {
 				$uptSynopsis = "UPDATE movie SET mov_synopsis = :synopsis, mov_date_update  = NOW() WHERE mov_id = :mov_id";
 				$pdoStatement = $pdo->prepare($uptSynopsis);
 				$pdoStatement->bindValue(':mov_id' , $_GET['mov_id'], PDO::PARAM_INT);
-				$pdoStatement->bindValue(':synopsis' , $synopsis);
+				$pdoStatement->bindValue(':synopsis' , $mov_synopsis);
 				if ($pdoStatement->execute()){
 					echo "la synopsis du film a bien été modifier<br/>";
 				}
@@ -253,12 +266,24 @@ if (!empty($_POST)) {
 					echo "uptSynopsis pas executé <br/>";
 				}
 			}
-			
+
+			if ($movYearValide) {
+				$uptYear = "UPDATE movie SET mov_year = :year, mov_date_update  = NOW() WHERE mov_id = :mov_id";
+				$pdoStatement = $pdo->prepare($uptYear);
+				$pdoStatement->bindValue(':mov_id' , $_GET['mov_id'], PDO::PARAM_INT);
+				$pdoStatement->bindValue(':year' , $mov_year);
+				if ($pdoStatement->execute()){
+					echo "la synopsis du film a bien été modifier<br/>";
+				}
+				else{
+					echo "uptSynopsis pas executé <br/>";
+				}
+			}
 		}
 	}
-	else{
-		if ($titleValide && $og_titleValide && $pathValide && $castValide && $categotyValide && $synopsis && (isset($_FILES) || $imageApiValide)) {
-			if (isset($_FILES)) {
+	elseif(!isset($_GET['mov_id'])){
+		if ($titleValide && $og_titleValide && $pathValide && $castValide && $categotyValide && $synopsisValide && (!empty($_FILES) || $imageApiValide)) {
+			if (!empty($_FILES['name'])) {
 				foreach ($_FILES as $key => $fichier) {
 					// Je teste si le fichier a été uploadé
 					if (!empty($fichier) && !empty($fichier['name'])) {
@@ -276,28 +301,31 @@ if (!empty($_POST)) {
 									$photo = 'upload/'.$mov_title.'.'.$extension;
 
 									// J'écris ma requête dans une variable
-									$insertInto = "INSERT INTO movie( cat_id, sto_id, mov_title, mov_year, mov_cast, mov_synopsis, mov_path, mov_original_title, mov_image, mov_date_creation, mov_date_updated ) VALUES( :cat_id, :sto_id, :titre, :annee, :acteurs, :synopsis, :filename, :ogTitre, :affiche, NOW(), NOW())";
+									$insertInto = "INSERT INTO movie(cat_id, sto_id, mov_title, mov_year, mov_cast, mov_synopsis, mov_path, mov_original_title, mov_image, mov_date_creation) VALUES( :cat_id, :sto_id, :titre, :annee, :acteurs, :synopsis, :filename, :ogTitre, :affiche, NOW())";
 
 									// Je prépare ma requête
 									$pdoStatement = $pdo->prepare($insertInto);
 									// Je bind toutes les variables de requête
+									$pdoStatement->bindValue(':cat_id', $cat_id, PDO::PARAM_INT);
+									$pdoStatement->bindValue(':sto_id', $sto_id, PDO::PARAM_INT);
 									$pdoStatement->bindValue(':titre', $mov_title);
-									$pdoStatement->bindValue(':ogTitre', $mov_original_title);
-									$pdoStatement->bindValue(':annee', $mov_year);
-									$pdoStatement->bindValue(':synopsis', $mov_synopsis);
-									$pdoStatement->bindValue(':description', $mov_path);
+									$pdoStatement->bindValue(':annee', $mov_year, PDO::PARAM_INT);
 									$pdoStatement->bindValue(':acteurs', $mov_cast);
-									$pdoStatement->bindValue(':affiche', $mov_image);
-									$pdoStatement->bindValue(':cat_id', $cat_id);
-									$pdoStatement->bindValue(':sup_id', $sto_id);
-
+									$pdoStatement->bindValue(':synopsis', $mov_synopsis);
+									$pdoStatement->bindValue(':filename', $mov_path);
+									$pdoStatement->bindValue(':ogTitre', $mov_original_title);
+									$pdoStatement->bindValue(':affiche', $photo);
 									// J'exécute la requête, et ça me renvoi true ou false
 									if ($pdoStatement->execute()) {
 										$newId = $pdo->lastInsertId();
 										// Je redirige sur la même page, à laquelle j'ajoute l'id du film créé => modification
 										// Pas de formulaire soumis sur la page de redirection => pas de POST
 										header('Location: details.php?mov_id='.$newId);
-
+										//echo "insert ok avec image file";
+									}
+									else{
+										echo $insertInto.'<br/>';
+										print_r($pdoStatement->errorInfo());
 									}
 									
 								}
@@ -315,13 +343,38 @@ if (!empty($_POST)) {
 					}
 				}
 			}
-			else if ($imageApiValide){
-				//fonction insert avec $imageApi au lieu de $photo
+			else if (empty($_FILES['name'])){
+				$insertInto = "INSERT INTO movie(cat_id, sto_id, mov_title, mov_year, mov_cast, mov_synopsis, mov_path, mov_original_title, mov_image, mov_date_creation) VALUES( :cat_id, :sto_id, :titre, :annee, :acteurs, :synopsis, :filename, :ogTitre, :affiche, NOW())";
+
+				// Je prépare ma requête
+				$pdoStatement = $pdo->prepare($insertInto);
+				// Je bind toutes les variables de requête
+				$pdoStatement->bindValue(':cat_id', $cat_id, PDO::PARAM_INT);
+				$pdoStatement->bindValue(':sto_id', $sto_id, PDO::PARAM_INT);
+				$pdoStatement->bindValue(':titre', $mov_title);
+				$pdoStatement->bindValue(':annee', $mov_year, PDO::PARAM_INT);
+				$pdoStatement->bindValue(':acteurs', $mov_cast);
+				$pdoStatement->bindValue(':synopsis', $mov_synopsis);
+				$pdoStatement->bindValue(':filename', $mov_path);
+				$pdoStatement->bindValue(':ogTitre', $mov_original_title);
+				$pdoStatement->bindValue(':affiche', $imageApi);
+
+				// J'exécute la requête, et ça me renvoi true ou false
+				if ($pdoStatement->execute()) {
+					$newId = $pdo->lastInsertId();
+					// Je redirige sur la même page, à laquelle j'ajoute l'id du film créé => modification
+					// Pas de formulaire soumis sur la page de redirection => pas de POST
+					header('Location: details.php?mov_id='.$newId);
+
+					//echo "insert ok avec api";
+				}
+				else{
+					echo $insertInto.'<br/>';
+					print_r($pdoStatement->errorInfo());
+				}
 			}
 		}
 	}
 }
-
-
 require ('inc/view_add_edit.php');
 ?>
