@@ -1,9 +1,11 @@
 <?php 
 	require ('inc/db.php');
+	require_once ('inc/function.php');
+
 	if (!empty($_GET['search'])) {
 		$searchVal = $_GET['search'];
 
-		$sql = "SELECT mov_title, mov_id, mov_year, mov_image, cat_name, mov_synopsis
+		/*$sql = "SELECT mov_title, mov_id, mov_year, mov_image, cat_name, mov_synopsis
 		FROM movie 
 		JOIN category ON category.cat_id = movie.cat_id
 		WHERE mov_title LIKE :search
@@ -20,7 +22,9 @@
 		}
 		else{
 			print_r($pdo->errorInfo());
-		}
+		}*/
+
+		$mov_search = searchResult($searchVal);
 	}
 	else{
 		$searchVal = '';

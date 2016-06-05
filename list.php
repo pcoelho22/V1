@@ -1,6 +1,7 @@
 <?php
 //Je crée PDO
 require 'inc/db.php';
+require_once ('inc/function.php');
 
 // Je recupère les cat_id via GET
 

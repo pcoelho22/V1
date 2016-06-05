@@ -26,9 +26,9 @@
 		<?php if (isset($moviesListe) && sizeof($moviesListe) > 0) : ?>
 			<?php foreach ($moviesListe as $currentFilm) : ?>
 				<tr>
+					<td><img src="<?= $currentFilm['mov_image'] ?>"></td>
 					<td><a href="details.php?mov_id=<?= $currentFilm['mov_id'] ?>"><?= $currentFilm['mov_title'] ?> </a></td>
 					<td><?= $currentFilm['mov_year'] ?></td>
-					<td><?= $currentFilm['mov_image'] ?></td>
 					<td><?= $currentFilm['cat_name'] ?></td>
 				</tr>
 			<?php endforeach; ?>

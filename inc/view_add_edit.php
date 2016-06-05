@@ -39,7 +39,7 @@
 				</select><br/>
 				<textarea rows="4" cols="50" name="synopsis" placeholder="Synopsis" ><?= $movieInfo['mov_synopsis'] ?></textarea><br/>
 				<input type="text" name="og_title" placeholder="Titre original" value="<?= $movieInfo['mov_original_title'] ?>"><br/>
-				<input type="text" name="imageApi" placeholder="Lien de l'image api"><br/>
+				<input type="text" name="imageApi" placeholder="Lien de l'image api" value="<?= $movieInfo['mov_image'] ?>"><br/>
 				<input type="file" name="image"><br/><br/>
 				<input type="submit" name="valider" value="valider">
 				<button><a href="confirmation.php?mov_id=<?= $_GET['mov_id'] ?>">supprimer</a></button>
