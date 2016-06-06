@@ -24,19 +24,19 @@
 		</form>
 		<!-- il faut faire un foreach-->
 			
-				<div class="nbcategories">
-					<?php foreach ($catList as $key => $value) :?>
-						<a href="list.php?cat_id=<?= $value['cat_id'] ?>"><?= $value['Category'] ?></a>: <?= $value['nbMovies'] ?>
-					<?php endforeach; ?>
-				</div>
+		<div class="nbcategories">
+			<?php foreach ($catList as $key => $value) :?>
+				<a href="list.php?cat_id=<?= $value['cat_id'] ?>"><?= $value['Category'] ?></a>: <?= $value['nbMovies'] ?>
+			<?php endforeach; ?>
+		</div>
 
-				<div class="image">
-				<ul>
-					<?php foreach ($movListIndex as $key => $value) :?>
-						<li><img src="<?= $value['mov_image'] ?>"><a href="details.php?mov_id=<?= $value['mov_id']?>"><?= $value['mov_title'] ?></a></li>
-					<?php endforeach; ?>
-				</ul>
-				</div>
+		<div class="image">
+			<ul>
+				<?php foreach ($movListIndex as $key => $value) :?>
+					<li><img src="<?= $value['mov_image'] ?>"><a href="details.php?mov_id=<?= $value['mov_id']?>"><?= $value['mov_title'] ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
 	</main>
 </body>
 </html>
