@@ -16,7 +16,10 @@ main{
         margin: auto;
 
     }
-
+p{
+     font-family: 'Capture it', arial;
+     width: 600px;
+}
     .navlist {
         width: 100%;
         list-style-type: none;

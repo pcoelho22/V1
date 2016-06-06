@@ -1,7 +1,7 @@
 <?php 
 	require ('inc/db.php');
 	require_once ('inc/function.php');
-
+	
 	if (!empty($_GET['search'])) {
 		$searchVal = $_GET['search'];
 
