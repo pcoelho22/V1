@@ -36,7 +36,7 @@
 	<?php else: ?>
 		<h3>Liste des films</h3>
 
-		<?php if (isset($searchVal) && sizeof($mov_search) > 0) : ?>
+		<?php if (sizeof($mov_search) > 0) : ?>
 			<?php foreach ($mov_search as $currentFilm) : ?>
 				
 				<img src="<?= $currentFilm['mov_image'] ?>">
@@ -52,5 +52,7 @@
 			<?php endforeach; ?>
 		<?php endif; ?>
 	<?php endif; ?>
+			
+
 </body>
 </html>
