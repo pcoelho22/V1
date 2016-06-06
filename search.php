@@ -1,82 +1,34 @@
 <?php 
-//Je me connecte a la BD
-require ('inc/db.php');
-require ('inc/functions.php');
+	require ('inc/db.php');
+	require_once ('inc/function.php');
 
-$rowCount = 0;
-$nbEtuPage = 0;
+	if (!empty($_GET['search'])) {
+		$searchVal = $_GET['search'];
 
-if (!empty($_GET['search'])) {
-	$searchEx = explode(' ', $_GET['search']);
-	if (isset($searchEx[0])){
-		$search = $searchEx[0];
+		/*$sql = "SELECT mov_title, mov_id, mov_year, mov_image, cat_name, mov_synopsis
+		FROM movie 
+		JOIN category ON category.cat_id = movie.cat_id
+		WHERE mov_title LIKE :search
+		OR mov_synopsis LIKE :search
+		OR cat_name LIKE :search
+		OR mov_path LIKE :search
+		OR mov_cast LIKE :search";
+
+		$pdoStatement = $pdo->prepare($sql);
+		$pdoStatement->bindValue(":search","%$searchVal%");
+		// Si erreur
+		if ($pdoStatement->execute()) {
+			$mov_search = $pdoStatement->fetchAll();
+		}
+		else{
+			print_r($pdo->errorInfo());
+		}*/
+
+		$mov_search = searchResult($searchVal);
 	}
 	else{
-		$search = '';
-	}
-	if (isset($searchEx[1])) {
-		$search2 = $searchEx[1];
-	}
-	else{
-		$search2 = ' ';
-	}
-}
-else{
-	$search = '';
-	$search2 = ' ';
-}
-
-$currentOffset = 0;
-if (array_key_exists('offset', $_GET) && $_GET['offset'] > 0) {
-	$currentOffset = intval($_GET['offset']);
-}
-
-$currentFilm = array();
-
-/*$sql = "SELECT stu_id, stu_email, stu_birthdate AS birthdate, stu_name, stu_firstname, cou_name, cit_name, mar_name, ses_id
-	FROM student
-	LEFT OUTER JOIN country ON country.cou_id = student.cou_id
-	LEFT OUTER JOIN city ON city.cit_id = student.cit_id
-	LEFT OUTER JOIN marital_status ON marital_status.mar_id = student.mar_id
-	WHERE stu_name LIKE :search OR stu_name LIKE :search2 
-	OR stu_firstname LIKE :search OR stu_firstname LIKE :search2 
-	OR cit_name LIKE :search OR cit_name LIKE :search2 
-	OR mar_name LIKE :search OR mar_name LIKE :search2 
-	OR stu_email LIKE :search OR stu_email LIKE :search2 ";
-
-$pdoStatement = $pdo->prepare($sql);
-$pdoStatement->bindValue(':search', "%$search%");
-$pdoStatement->bindValue(':search2', "%$search2%");
-
-if (!$pdoStatement->execute()) {
-	print_r($pdo->errorInfo());
-}
-else{
-	//recuperer toutes les données
-	$etudiantListe = $pdoStatement->fetchAll();
-	//print_r($etudiantListe);
-}*/
-$currentFilm = gtFilmListSearch(e$search, $search2);
-
-/*$sql2 = "SELECT COUNT(*) AS count
-	FROM student
-	LEFT OUTER JOIN country ON country.cou_id = student.cou_id
-	LEFT OUTER JOIN city ON city.cit_id = student.cit_id
-	LEFT OUTER JOIN marital_status ON marital_status.mar_id = student.mar_id
-	WHERE stu_name LIKE :search OR stu_name LIKE :search2 
-	OR stu_firstname LIKE :search OR stu_firstname LIKE :search2 
-	OR cit_name LIKE :search OR cit_name LIKE :search2 
-	OR mar_name LIKE :search OR mar_name LIKE :search2 
-	OR stu_email LIKE :search OR stu_email LIKE :search2 ";
-
-$pdoStatement2 = $pdo->prepare($sql2);
-$pdoStatement2->bindValue(':search', "%$search%");
-$pdoStatement2->bindValue(':search2', "%$search2%");
-
-if ($pdoStatement2->execute()) {
-	$countElem = $pdoStatement2->fetch();
-	$nbElemTot = intval($countElem['count']);
-}
-*/
-$nbElemTot = getNbElemTot($search, $search2);
-require ('inc/list_view.php');
+		$searchVal = '';
+	} 
+	require_once('inc/nav.php');
+	require ('inc/view_list.php');
+?>
