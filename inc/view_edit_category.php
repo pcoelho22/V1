@@ -20,6 +20,9 @@
 		<input type="text" name="new_cat_name" value="<?= $_GET['cat_name'] ?>">
 		<input type="submit" value="Modifier catégorie">
 	</form>
+	<form>
+		<button><a href="confirmation.php?cat_name=<?= $_GET['cat_name'] ?>">supprimer</a></button>
+	</form>
 	<?php else: ?>
 	<form action="edit_category.php" method="post">
 		<input type="text" name="new_cat_name">

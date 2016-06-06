@@ -331,6 +331,23 @@ function deleteMovie($movId){
 	header('Location: index.php');
 }
 
+function deleteCategory($catName){
+	global $pdo;
+	$sql = '
+		DELETE  
+		FROM category
+		WHERE cat_name = :catX
+	';
+	// J'exécute ma requête et je récupère les données dans $pdoStatement
+	$pdoStatement = $pdo->prepare($sql);
+	$pdoStatement->bindValue(':catX', $catName);
+		// Si erreur
+		if ($pdoStatement->execute() === false) {
+			print_r($pdo->errorInfo());
+		}
+	header('Location: edit_category.php');
+}
+
 //add_edit.php
 function getStorageList(){
 	global $pdo;
