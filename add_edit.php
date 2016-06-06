@@ -98,8 +98,8 @@ if (!empty($_POST)) {
 		$titleValide = true;
 	}
 
-	if (empty($mov_path) || strlen($mov_path) > 255) {
-		echo 'le path est vide ou trop long <br/>';
+	if (empty($mov_path) || preg_match('/^([a-zA-Z]{1})(:\\\\)([^\\\\\\s]{1}[^\\\\]*\\\\)*([^\\\\\\s]{1}[^\\\\]*?)(\\.)([a-zA-Z]+)$/', $mov_path) === 0) {
+		echo 'le path est vide ou pas correct <br/>';
 	}
 	else {
 		$pathValide = true;
