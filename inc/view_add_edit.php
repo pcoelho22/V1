@@ -46,7 +46,7 @@
 			</fieldset>
 	</form>
 		<!-- -->
-	<?php elseif (isset($_GET['search'])): ?>
+	<?php elseif (!empty($_GET['search'])): ?>
 		<h1>champs pre-remplis</h1>
 		<form action="add_edit.php?search=<?= $_GET['search'] ?>" method="post" enctype="multipart/form-data" >
 			<fieldset>

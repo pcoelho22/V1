@@ -36,7 +36,7 @@ if (isset($_GET['mov_id'])) {
 	$movieInfo = getMovieDetailsEdit($idMovie);
 }
 
-if (isset($_GET["search"])) {
+if (!empty($_GET["search"])) {
 	$champ = $_GET["search"];
 	$search = file_get_contents("http://www.omdbapi.com/?t=$champ");
 	$infoFilmImbd = json_decode($search, true);
