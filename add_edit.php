@@ -37,11 +37,21 @@ if (isset($_GET['mov_id'])) {
 }
 
 if (!empty($_GET["search"])) {
-	$champ = $_GET["search"];
-	$search = file_get_contents("http://www.omdbapi.com/?t=$champ");
+
+	$searchTrim = trim($_GET["search"]);
+	$champ = str_replace(' ', '+', $searchTrim);
+	$search = file_get_contents("http://www.omdbapi.com/?s=$champ");
+	$titleFilmSearch = json_decode($search, true);
+	var_dump($titleFilmSearch);
+}
+
+if (!empty($_GET["imbdId"])) {
+	$champ = $_GET["imbdId"];
+	$search = file_get_contents("http://www.omdbapi.com/?i=$champ");
 	$infoFilmImbd = json_decode($search, true);
 	//var_dump($infoFilmImbd);
 }
+
 if (!empty($_POST)) {
 	//print_r($_POST); 
 	$extensionAutorisees = array('jpg', 'jpeg', 'png', 'gif', 'tif', 'svg');

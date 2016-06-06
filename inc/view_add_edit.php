@@ -15,6 +15,13 @@
 			<input type="text" name="search">
 			<input type="submit" value="remplir les champs">
 		</fieldset>	
+		<?php if (!empty($_GET['search'])) :?>
+			<div>
+				<?php foreach ($titleFilmSearch['Search'] as $key => $value2): ?>
+						<a href="add_edit.php?imbdId=<?= $value2['imdbID'] ?>"><?= $value2['Title'] ?></a>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
 	</form>
 	<br/><br/>
 		<?php if(isset($_GET['mov_id'])): ?>
@@ -46,9 +53,9 @@
 			</fieldset>
 	</form>
 		<!-- -->
-	<?php elseif (!empty($_GET['search'])): ?>
+	<?php elseif (!empty($_GET['imbdId'])): ?>
 		<h1>champs pre-remplis</h1>
-		<form action="add_edit.php?search=<?= $_GET['search'] ?>" method="post" enctype="multipart/form-data" >
+		<form action="add_edit.php?imbdId=<?= $_GET['imbdId'] ?>" method="post" enctype="multipart/form-data" >
 			<fieldset>
 				<input type="text" name="title" placeholder="Titre du film" value="<?= $infoFilmImbd['Title'] ?>"><br/>
 				<input type="text" name="path" placeholder="Path"><br/>
