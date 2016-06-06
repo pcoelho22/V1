@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
+	<?php require ('inc/header.php') ?>
+	<link rel="stylesheet" type="text/css" href="css/styleAddEdit.css">
 	<title></title>
+	<meta charset="utf-8">
 </head>
 <body>
 	<h3>Liste des catégories</h3>
