@@ -7,7 +7,7 @@ if (!empty($_GET['mov_id'])) {
 	$movieID = intval($_GET['mov_id']);
 	// pour debug
 	//print_r($_GET);
-	$sql = '
+	/*$sql = '
 		DELETE  
 		FROM movie
 		WHERE mov_id = :movieX
@@ -19,7 +19,9 @@ if (!empty($_GET['mov_id'])) {
 		if ($pdoStatement->execute() === false) {
 			print_r($pdo->errorInfo());
 		}
-	header('Location: index.php');
+	header('Location: index.php');*/
+
+	deleteMovie($movieID);
 }
 
 

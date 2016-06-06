@@ -6,8 +6,8 @@
 			<li><a href="add_edit.php">Ajouter un film</a></li>
 		</ul>
 	</nav> 
-	<form action="" method="post">
+	<form action="search.php" method="get">
 		<input type="text" name="search" value="" placeholder="Search..." />
-		<li style="float:right"><input type="submit" value="REchercher" /></li>
+	<input type="submit" value="Rechercher" />
 	</form>
 </div>
