@@ -205,7 +205,7 @@ function catListIndex(){
 function movListIndex(){
 	global $pdo;
 
-	$sql2 = "SELECT mov_image, mov_title, mov_id FROM movie ORDER BY mov_date_creation LIMIT 4";
+	$sql2 = "SELECT mov_image, mov_title, mov_id FROM movie ORDER BY mov_date_creation DESC LIMIT 4";
 
 	$pdoStatement2 = $pdo->query($sql2);
 
