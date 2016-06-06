@@ -15,12 +15,14 @@
 			<input type="text" name="search">
 			<input type="submit" value="remplir les champs">
 		</fieldset>	
-		<?php if (!empty($_GET['search'])) :?>
+		<?php if (!empty($_GET['search']) && $resultOk == true) :?>
 			<div>
-				<?php foreach ($titleFilmSearch['Search'] as $key => $value2): ?>
+				<?php foreach ($resultSearch['Search'] as $key => $value2): ?>
 						<a href="add_edit.php?imbdId=<?= $value2['imdbID'] ?>"><?= $value2['Title'] ?></a>
 				<?php endforeach; ?>
 			</div>
+		<?php elseif(!empty($_GET['search']) && $resultOk == false): ?>
+			<h3>aucun film trouvé</h3>
 		<?php endif; ?>
 	</form>
 	<br/><br/>

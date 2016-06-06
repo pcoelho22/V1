@@ -42,7 +42,14 @@ if (!empty($_GET["search"])) {
 	$champ = str_replace(' ', '+', $searchTrim);
 	$search = file_get_contents("http://www.omdbapi.com/?s=$champ");
 	$titleFilmSearch = json_decode($search, true);
-	var_dump($titleFilmSearch);
+	if (sizeof($titleFilmSearch) > 2) {
+		$resultSearch = $titleFilmSearch;
+		$resultOk = true;
+	}
+	else{
+		$resultOk = false;
+	}
+	//var_dump($titleFilmSearch);
 }
 
 if (!empty($_GET["imbdId"])) {
