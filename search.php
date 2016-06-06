@@ -26,8 +26,19 @@
 
 		$mov_search = searchResult($searchVal);
 	}
-	else{
-		$searchVal = '';
+	elseif (empty($_GET['search'])) {
+		$sql = "SELECT mov_title, mov_id, mov_year, mov_image, cat_name, mov_synopsis
+		FROM movie 
+		JOIN category ON category.cat_id = movie.cat_id";
+
+		$pdoStatement = $pdo->prepare($sql);
+		// Si erreur
+		if ($pdoStatement->execute()) {
+			$mov_search = $pdoStatement->fetchAll();
+		}
+		else{
+			print_r($pdo->errorInfo());
+		}
 	} 
 	require_once('inc/nav.php');
 	require ('inc/view_list.php');
