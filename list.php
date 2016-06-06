@@ -11,7 +11,7 @@ if (!empty($_GET['cat_id'])) {
 	// Nombre de films par page
 	$currentOffset = 0;
 	$currentPage=1;
-	$nbPerPage=4;
+	$nbPerPage=3;
 
 	if(!empty($_GET['nbPerPage'])){
 		$nbPerPage = intval($_GET['nbPerPage']);
@@ -21,7 +21,7 @@ if (!empty($_GET['cat_id'])) {
 		$currentOffset=($currentPage-1)*$nbPerPage;
 	}
 
-	$sql = '
+	/*$sql = '
 		SELECT mov_id, mov_image, mov_title, mov_year, category.cat_name
 		FROM movie
 		JOIN category ON category.cat_id = movie.cat_id
@@ -40,7 +40,8 @@ if (!empty($_GET['cat_id'])) {
 	}
 	else if ($pdoStatement->rowCount() > 0) {
 		$moviesListe = $pdoStatement->fetchAll();
-	}
+	}*/
+	$moviesListe = getMovieList($catID, $nbPerPage, $currentOffset);
 }
 //J'affiche ma page
 	require_once 'inc/nav.php';

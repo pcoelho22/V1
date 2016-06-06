@@ -80,32 +80,31 @@ function getNbElemTot($search, $search2){
 	return $nbElemTot;
 }
 
-function getMovieList($id_session, $nbEtuPage, $currentOffset){
+function getMovieList($catID, $nbPerPage, $currentOffset){
 	global $pdo;
-	//$pdo = connectToBd();
-
-	$sql = "SELECT mov_id, mov_tittle
+	
+	$sql = '
+		SELECT mov_id, mov_image, mov_title, mov_year, category.cat_name
 		FROM movie
-		LEFT OUTER JOIN category ON category.cat_id = movie.cat_id
-		LEFT OUTER JOIN storage ON storage.sto_id = movie.sto_id
-		WHERE ses_id = :id_session
-		LIMIT :offset, :nbEtuPage"; 
-		
-		$pdoStatement =  $pdo->prepare($sql);
-		$pdoStatement->bindValue(':id_session', $id_session, PDO::PARAM_INT);
-		$pdoStatement->bindValue(':nbEtuPage', $nbEtuPage, PDO::PARAM_INT);
-		$pdoStatement->bindValue(':offset', $currentOffset, PDO::PARAM_INT);
+		JOIN category ON category.cat_id = movie.cat_id
+		WHERE category.cat_id = :catID
+		LIMIT :offset,:nbPerPage
+	';
+	$pdoStatement = $pdo->prepare($sql);
+	// je donne la valeur au paramètre de requete
+	$pdoStatement->bindValue(':catID', $catID, PDO::PARAM_INT);
+	$pdoStatement->bindValue(':nbPerPage', $nbPerPage, PDO::PARAM_INT);
+	$pdoStatement->bindValue(':offset', $currentOffset, PDO::PARAM_INT);
 
-		//si erreur
-		if (!$pdoStatement->execute()) {
-			print_r($pdo->errorInfo());
-		}
-		else{
-			//recuperer toutes les données
-			$movieListe = $pdoStatement->fetchAll();
-		}
+	// Si erreur
+	if ($pdoStatement ->execute()===false) {
+		print_r($pdo->errorInfo());
+	}
+	else if ($pdoStatement->rowCount() > 0) {
+		$moviesListe = $pdoStatement->fetchAll();
+	}
 
-	return $movieListe;
+	return $moviesListe;
 }
 
 function getElementTotList($id_session){
